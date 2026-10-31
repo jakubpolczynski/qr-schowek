@@ -1,0 +1,1 @@
+`qrcodegen.js` is the QR Code generator library by Project Nayuki, obtained from <https://www.nayuki.io/res/qr-code-generator-library/qrcodegen.js>. Its MIT license is included at the top of the file.

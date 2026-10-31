@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <title>Odbierz na telefonie</title>
+  <link rel="stylesheet" href="/phone.css">
+  <script defer src="/phone.js"></script>
+</head>
+<body>
+  <main class="phone-page">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">↘</span> Schowek na telefon</div>
+    <p class="loading" id="loading" role="status">Otwieranie zawartości…</p>
+
+    <section id="text-section" hidden aria-labelledby="text-title">
+      <div class="received">Z komputera na telefon</div>
+      <h1 id="text-title">Twój tekst<br>jest gotowy<span>.</span></h1>
+      <p class="description">Skopiuj go i wklej tam, gdzie potrzebujesz.</p>
+      <label class="sr-only" for="received-text">Odebrany tekst</label>
+      <textarea id="received-text" readonly spellcheck="false"></textarea>
+      <button class="primary" type="button" id="copy-text">Kopiuj tekst</button>
+      <p class="feedback" id="copy-feedback" role="status"></p>
+    </section>
+
+    <section id="image-section" hidden aria-labelledby="image-title">
+      <div class="received">Z komputera na telefon</div>
+      <h1 id="image-title">Twój obraz<br>jest gotowy<span>.</span></h1>
+      <p class="description">Pobierz go lub przytrzymaj, aby zobaczyć opcje telefonu.</p>
+      <div class="image-frame"><img id="received-image" alt="Obraz przesłany z komputera"></div>
+      <a class="primary" id="download-image">Pobierz obraz</a>
+      <p class="feedback">Opcja kopiowania obrazu zależy od telefonu i przeglądarki.</p>
+    </section>
+
+    <section id="error-section" hidden aria-labelledby="error-title">
+      <h1 id="error-title">Link jest<br>niedostępny<span>.</span></h1>
+      <p class="description">Mógł wygasnąć albo zostać usunięty. Wróć do komputera i utwórz nowy kod.</p>
+    </section>
+    <footer>Przesłano przez sieć lokalną.</footer>
+  </main>
+</body>
+</html>

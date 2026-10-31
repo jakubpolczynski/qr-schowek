@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Schowek na telefon — tekst i obrazy</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="vendor/qrcodegen.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="brand" aria-label="Schowek na telefon">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3.5 9V3.5H9M15 3.5h5.5V9M20.5 15v5.5H15M9 20.5H3.5V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 8h3v3H8zm5 5h3v3h-3zM8 14h2v2H8zm6-6h2v2h-2z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span>Schowek na telefon</span>
+      </div>
+      <span class="offline"><span aria-hidden="true"></span>Działa bez internetu</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <h1 id="page-title">Przenieś na<br>telefon<span class="title-dot">.</span></h1>
+          <p>Tekst i obrazy z komputera, bez wysyłania wiadomości do siebie.</p>
+        </div>
+        <div class="intro-note" aria-hidden="true">
+          <svg viewBox="0 0 72 72" fill="none">
+            <rect x="23" y="9" width="27" height="50" rx="6" stroke="currentColor" stroke-width="2"/>
+            <path d="M31 15h11M34 53h5M7 29h11m-4-4 4 4-4 4M54 40h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </section>
+
+      <div class="mode-switch" role="group" aria-label="Co chcesz przesłać?">
+        <button class="mode-button" id="mode-text" type="button" aria-pressed="true">Tekst</button>
+        <button class="mode-button" id="mode-image" type="button" aria-pressed="false">Obraz</button>
+      </div>
+
+      <div class="workspace">
+        <section class="editor" aria-label="Zawartość do przesłania">
+          <div id="text-editor">
+          <div class="section-heading">
+            <div>
+              <h2 id="editor-title">Twój tekst</h2>
+              <p>Wklej tekst, który chcesz mieć na telefonie.</p>
+            </div>
+            <span class="step" aria-label="Krok 1">1</span>
+          </div>
+
+          <fieldset class="method-options">
+            <legend>Jak przesłać tekst?</legend>
+            <div class="method-choices">
+              <label><input type="radio" name="text-method" value="direct" checked> Bezpośredni kod QR</label>
+              <label><input type="radio" name="text-method" value="wifi"> Przez Wi-Fi</label>
+            </div>
+          </fieldset>
+
+          <div class="actions">
+            <button class="button button-primary" id="paste-button" type="button">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 4H5.5A1.5 1.5 0 0 0 4 5.5v10A1.5 1.5 0 0 0 5.5 17h9a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 14.5 4H13M8 3h4a1 1 0 0 1 1 1v1H7V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Wklej ze schowka
+            </button>
+            <button class="button button-text" id="clear-button" type="button" disabled>Wyczyść</button>
+          </div>
+          <p class="clipboard-message" id="clipboard-message" role="status"></p>
+
+          <label class="sr-only" for="text-input">Tekst do przeniesienia na telefon</label>
+          <textarea id="text-input" placeholder="Albo kliknij tutaj i wklej tekst za pomocą Ctrl+V…" spellcheck="false" aria-describedby="text-help byte-count"></textarea>
+          <div class="editor-meta">
+            <p id="text-help">Kod tworzy się automatycznie.</p>
+            <p id="byte-count">0 / 2952 B</p>
+          </div>
+
+          <button class="button button-primary share-button" id="share-text" type="button" hidden disabled>Utwórz kod Wi-Fi</button>
+          </div>
+
+          <div id="image-editor" hidden>
+            <div class="section-heading">
+              <div>
+                <h2>Twój obraz</h2>
+                <p>Wklej obraz ze schowka albo wybierz plik.</p>
+              </div>
+              <span class="step" aria-label="Krok 1">1</span>
+            </div>
+            <div class="actions image-actions">
+              <button class="button button-primary" id="paste-image" type="button">Wklej obraz</button>
+              <button class="button button-secondary" id="choose-image" type="button">Wybierz plik</button>
+              <button class="button button-text" id="clear-image" type="button" disabled>Wyczyść</button>
+              <input id="image-file" type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
+            </div>
+            <p class="clipboard-message" id="image-message" role="status"></p>
+            <div class="image-well" id="image-well">
+              <div class="image-empty" id="image-empty">
+                <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="5" y="7" width="30" height="26" rx="4" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="15" r="3" stroke="currentColor" stroke-width="2"/><path d="m8 29 8-8 5 5 5-6 7 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Wklej obraz przez Ctrl+V<br>lub przeciągnij go tutaj.</span>
+              </div>
+              <img id="image-preview" alt="Podgląd wybranego obrazu" hidden>
+            </div>
+            <div class="editor-meta"><p id="image-detail">PNG, JPG, GIF lub WebP · maks. 15 MB</p></div>
+            <button class="button button-secondary share-button" id="retry-image" type="button" hidden>Utwórz kod Wi-Fi</button>
+          </div>
+
+          <div class="network-settings" id="network-settings" hidden>
+            <div class="network-heading"><label for="network-select">Adres komputera w sieci</label><button id="refresh-network" type="button">Odśwież</button></div>
+            <select id="network-select" aria-describedby="network-help"></select>
+            <p id="network-help">Telefon i komputer muszą być w tej samej sieci. Jeśli link nie działa, wybierz inny adres.</p>
+          </div>
+          <p class="wifi-unavailable" id="wifi-unavailable" hidden>Aby przesyłać przez Wi-Fi, uruchom plik <strong>Uruchom.bat</strong> z folderu programu.</p>
+
+          <div class="privacy-note">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5 16 5v4.3c0 3.5-2.2 6.4-6 8.2-3.8-1.8-6-4.7-6-8.2V5l6-2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m7.3 9.8 1.8 1.8 3.7-3.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <p id="privacy-direct"><strong>Twój tekst zostaje tutaj.</strong><br>Kod powstaje lokalnie, bez wysyłania danych.</p>
+            <p id="privacy-wifi" hidden><strong>Udostępnianie lokalne.</strong><br>Link działa 15 minut. Każdy, kto go ma i jest w sieci, może go otworzyć. Połączenie nie jest szyfrowane — unikaj poufnych danych w publicznym Wi-Fi.</p>
+          </div>
+        </section>
+
+        <section class="preview" aria-labelledby="preview-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="preview-title">Zeskanuj kod</h2>
+              <p>Otwórz skaner QR w telefonie.</p>
+            </div>
+            <span class="step" aria-label="Krok 2">2</span>
+          </div>
+
+          <div class="qr-frame" id="qr-frame">
+            <div class="qr-placeholder" id="qr-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 72 72" fill="none"><path d="M9 28V9h19M44 9h19v19M63 44v19H44M28 63H9V44" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22h10v10H22zm18 18h10v10H40zm-18 21V40h9v9m9-27h10v10H40z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+              <span>Tu pojawi się kod QR</span>
+            </div>
+            <div class="qr-image" id="qr-image"></div>
+          </div>
+          <div class="preview-footer">
+            <div>
+              <p class="qr-status" id="qr-status" role="status" aria-live="polite">Czeka na tekst</p>
+              <p class="scan-help" id="scan-help">Kod pojawi się, gdy wkleisz tekst.</p>
+            </div>
+            <button class="button button-expand" id="expand-button" type="button" disabled>
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Powiększ
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <div class="how-to">
+        <span class="how-to-icon" aria-hidden="true">i</span>
+        <p id="how-direct">Po zeskanowaniu wybierz <strong>„Kopiuj tekst”</strong> w aplikacji skanującej, np. w Google Lens. Skanowanie samo nie zapisuje tekstu w schowku telefonu.</p>
+        <p id="how-wifi-text" hidden>Zeskanuj kod, otwórz link na telefonie i wybierz <strong>„Kopiuj tekst”</strong>. Nie zamykaj okna programu na komputerze.</p>
+        <p id="how-wifi-image" hidden>Zeskanuj kod, otwórz link na telefonie i wybierz <strong>„Pobierz obraz”</strong>. Nie zamykaj okna programu na komputerze.</p>
+      </div>
+    </main>
+    <footer>Prosto z komputera na telefon.</footer>
+  </div>
+
+  <dialog class="qr-dialog" id="qr-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-content">
+      <div class="dialog-heading">
+        <div>
+          <h2 id="dialog-title">Zeskanuj kod</h2>
+          <p id="dialog-help">Po zeskanowaniu skopiuj tekst na telefonie.</p>
+        </div>
+        <button class="close-button" id="close-dialog" type="button" aria-label="Zamknij powiększenie">×</button>
+      </div>
+      <div class="dialog-qr" id="dialog-qr"></div>
+    </div>
+  </dialog>
+</body>
+</html>
